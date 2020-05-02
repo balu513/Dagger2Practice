@@ -26,7 +26,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // for the parameter constructered Module we need to build at the time of component generation.
-        CarComponent component = DaggerCarComponent.builder().petrolEngineModule(new PetrolEngineModule(200)).build();
+        //CarComponent component = DaggerCarComponent.builder().petrolEngineModule(new PetrolEngineModule(200)).build();
+
+
+        // Binds to BindingInstance of Component Builder
+        CarComponent component = DaggerCarComponent.builder().horsePower(444).engineCapcity(5400).build();
+
         component.Inject(this);
        // Car myCar = component.getMyCar();
        // car.drive();
