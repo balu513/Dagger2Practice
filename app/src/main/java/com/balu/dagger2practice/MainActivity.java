@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.balu.dagger2practice.car.Car;
-import com.balu.dagger2practice.car.Engine;
+import com.balu.dagger2practice.car.Driver;
 import com.balu.dagger2practice.car.PetrolEngine;
-import com.balu.dagger2practice.dagger.CarComponent;
-import com.balu.dagger2practice.dagger.DaggerCarComponent;
+import com.balu.dagger2practice.dagger.ActivityComponent;
+import com.balu.dagger2practice.dagger.DaggerActivityComponent;
 import com.balu.dagger2practice.dagger.PetrolEngineModule;
 
 import javax.inject.Inject;
@@ -20,7 +20,10 @@ public class MainActivity extends AppCompatActivity {
     Car car;
 
     @Inject
-    Engine engine;
+    PetrolEngine engine;
+
+    @Inject
+    Driver driver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,17 +32,19 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        // AppComponent is Application Level singleton so 'driver' obj refrence not changing even if Activity orientation change.
+        // ActivityComponent is Activity level singleton so , 'engine' obj ref is changing upon orientation change.
+
+
         // for the parameter constructered Module we need to build at the time of component generation.
-        CarComponent component = DaggerCarComponent.builder().petrolEngineModule(new PetrolEngineModule(200)).build();
+       // ActivityComponent component = DaggerActivityComponent.builder().appComponent(((MyApplication)getApplication()).getAppComponent()).petrolEngineModule(new PetrolEngineModule(200)).build();
 
 
 
         // Binds to BindingInstance of Component Builder
-       // CarComponent component = DaggerCarComponent.builder().horsePower(444).engineCapcity(5400).build();
-
-
-
-        component.Inject(this);
+        ActivityComponent activityComponent = DaggerActivityComponent.builder().appComponent(((MyApplication) getApplication()).getAppComponent()).engineCapcity(200).
+                horsePower(234).build();
+        activityComponent.Inject(this);
 
 
 
@@ -47,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         car.drive();
         engine.drive();
 
-        Log.d("MainActivity", "car: "+car+"   engine: "+engine);
+        Log.d("MainActivity", "\ncar: "+car+"\nengine: "+engine +"\ndriver: "+driver);
 
     }
 }

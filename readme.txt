@@ -99,6 +99,9 @@ Now we can inject whatever refrence we want. like below
     @Inject
     Engine engine;
 
+
+
+SCOPES:  (perActivity && perApplication)
 ------------------------------------------------------------------------------------------------------------------------------
 
 @Singleton :  singleton object per Component , Not for entire project .so whenver Component re-created, @singleton obj ref will change.
@@ -106,7 +109,31 @@ so if you build component inside activity then fot entire App we can maintian sa
 
 if you want Application level Singleton objects we need to define in oncreate() of Application class.
 
+----------------   ---------
+
+Singleton is per component base, in some case we need few references in Activity level so we should keep that in @ActityScope.
+means need to create component inside onCreate() Activity, so when Activity re-created Component also recreates.
+in this situation if we need few Objects in Application level Singleton (eg: HttpEnitity obj) so what we need to do is
+
+Create one more component with ApplicationScope and need to initiate that component in onCreate() of Application.
+
+and we have to add that ApplicationComponemt to ActivityComponen as Dependency.
+
+like below,
+ ActivityComponent activityComponent = DaggerActivityComponent.builder().appComponent(((MyApplication) getApplication()).getAppComponent()).engineCapcity(200).
+                horsePower(234).build();
+        activityComponent.Inject(this);
+
+     @Inject
+     Car car;
+
+     @Inject
+     PetrolEngine engine;
+
+     @Inject
+     Driver driver;
+
+=> driver --- belongs to Application component so ref wont change even new ActivityCompent creates while Activity recreated.
+=> car, engine -- belongs to Activity component so ref will change even new ActivityCompent creates while Activity recreates.
+
 ------------------------------------------------------------------------------------------------------------------------------
-
-
-

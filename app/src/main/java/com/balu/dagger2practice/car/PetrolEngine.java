@@ -9,15 +9,15 @@ public class PetrolEngine implements Engine {
 
     int horsePower;
 
-    @Inject
-    public PetrolEngine(int horsePower) {
-        this.horsePower = horsePower;
-    }
-
 //    @Inject
-//    public PetrolEngine( @Named("Horse Power") int horsePower) {
+//    public PetrolEngine(int horsePower) {
 //        this.horsePower = horsePower;
 //    }
+
+    @Inject
+    public PetrolEngine( @Named("Horse Power") int horsePower) {
+        this.horsePower = horsePower;
+    }
 
     @Override
     public void drive() {
