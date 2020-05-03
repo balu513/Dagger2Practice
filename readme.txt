@@ -117,12 +117,58 @@ in this situation if we need few Objects in Application level Singleton (eg: Htt
 
 Create one more component with ApplicationScope and need to initiate that component in onCreate() of Application.
 
-and we have to add that ApplicationComponemt to ActivityComponen as Dependency.
+and we have to add that ApplicationComponent to ActivityComponen as Dependency.
 
-like below,
+
+like below(inside Activity onCreate()),
  ActivityComponent activityComponent = DaggerActivityComponent.builder().appComponent(((MyApplication) getApplication()).getAppComponent()).engineCapcity(200).
                 horsePower(234).build();
         activityComponent.Inject(this);
+
+
+------------
+@ActivityScope
+@Component( dependencies =  {AppComponent.class},  modules = {WheelsModule.class,PetrolEngineModule.class})
+public interface ActivityComponent {
+   // Car getMyCar();
+    void Inject(MainActivity mainActivity);
+
+    @Component.Builder
+    interface Builder{
+
+        @BindsInstance
+        Builder horsePower (@Named( "Horse Power") int horsePower);
+
+        @BindsInstance
+        Builder engineCapcity(@Named("Engine Capacity") int engineCapacity);
+
+        ActivityComponent build();
+
+        Builder appComponent(AppComponent appComponent);
+    }
+}
+-------------
+
+@ApplicationScope
+@Component(modules = {DriverModule.class})
+public interface AppComponent {
+    Driver getDriver();
+}
+-----------
+inside Application class:
+public class MyApplication extends Application {
+    AppComponent appComponent;
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        appComponent = DaggerAppComponent.create();
+    }
+    public AppComponent getAppComponent(){
+        return appComponent;
+    }
+
+---------
+inside Activity Injected Values:
 
      @Inject
      Car car;
@@ -136,4 +182,50 @@ like below,
 => driver --- belongs to Application component so ref wont change even new ActivityCompent creates while Activity recreated.
 => car, engine -- belongs to Activity component so ref will change even new ActivityCompent creates while Activity recreates.
 
+
+NOTE:  through dependency Components, need to explicity provid object then only will avalible in the above code base AppComponet providing
+driver object by getDriver(), so if we have more objects for every obj we have provide explicitly, to overcome this problem SubComponent
+concept came.
+
+SubComponent Access all parentComponent Objects with out Explicit return methods like 'Driver gerDriver()'.
+
 ------------------------------------------------------------------------------------------------------------------------------
+
+SubComponents:
+
+inside Activity:
+
+        ActivityComponent activityComponent = ((MyApplication)getApplication()).getAppComponent().getActivityComponentBuilder()
+                .engineCapcity(1200)
+                .horsePower(450)
+                .build();
+        activityComponent.Inject(this);
+
+-----
+@ActivityScope
+@Subcomponent (modules = {WheelsModule.class,PetrolEngineModule.class})
+public interface ActivityComponent {
+    // Car getMyCar();
+    void Inject(MainActivity mainActivity);
+
+    @Subcomponent.Builder
+    interface Builder{
+
+        @BindsInstance
+        Builder horsePower (@Named( "Horse Power") int horsePower);
+
+        @BindsInstance
+        Builder engineCapcity(@Named("Engine Capacity") int engineCapacity);
+
+        ActivityComponent build();
+
+       // Builder appComponent(AppComponent appComponent);
+    }
+}
+--------
+@ApplicationScope
+@Component(modules = {DriverModule.class})
+public interface AppComponent {
+   // Driver getDriver();
+    ActivityComponent.Builder getActivityComponentBuilder();
+}

@@ -10,20 +10,43 @@ import javax.inject.Named;
 
 import dagger.BindsInstance;
 import dagger.Component;
+import dagger.Subcomponent;
 
 //https://www.youtube.com/watch?v=3tIvekCTSJg&list=PLrnPJCHvNZuA2ioi4soDZKz8euUQnJW65&index=8
 
 
+//@ActivityScope
+//@Component( dependencies =  {AppComponent.class},  modules = {WheelsModule.class,PetrolEngineModule.class})
+//public interface ActivityComponent {
+//   // Car getMyCar();
+//    void Inject(MainActivity mainActivity);
+//
+//    @Component.Builder
+//    interface Builder{
+//
+//        @BindsInstance
+//        Builder horsePower (@Named( "Horse Power") int horsePower);
+//
+//        @BindsInstance
+//        Builder engineCapcity(@Named("Engine Capacity") int engineCapacity);
+//
+//        ActivityComponent build();
+//
+//        Builder appComponent(AppComponent appComponent);
+//    }
+//}
+
+
+
+
+
 @ActivityScope
-@Component( dependencies =  {AppComponent.class},  modules = {WheelsModule.class,PetrolEngineModule.class})
+@Subcomponent (modules = {WheelsModule.class,PetrolEngineModule.class})
 public interface ActivityComponent {
-
-   // Car getMyCar();
-
+    // Car getMyCar();
     void Inject(MainActivity mainActivity);
 
-
-    @Component.Builder
+    @Subcomponent.Builder
     interface Builder{
 
         @BindsInstance
@@ -34,8 +57,6 @@ public interface ActivityComponent {
 
         ActivityComponent build();
 
-        Builder appComponent(AppComponent appComponent);
+       // Builder appComponent(AppComponent appComponent);
     }
-
-
 }

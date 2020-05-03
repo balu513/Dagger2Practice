@@ -9,6 +9,6 @@ import dagger.Component;
 @ApplicationScope
 @Component(modules = {DriverModule.class})
 public interface AppComponent {
-
-    Driver getDriver();
+   // Driver getDriver();
+    ActivityComponent.Builder getActivityComponentBuilder();
 }

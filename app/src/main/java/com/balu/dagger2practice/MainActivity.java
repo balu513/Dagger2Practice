@@ -9,13 +9,13 @@ import com.balu.dagger2practice.car.Car;
 import com.balu.dagger2practice.car.Driver;
 import com.balu.dagger2practice.car.PetrolEngine;
 import com.balu.dagger2practice.dagger.ActivityComponent;
-import com.balu.dagger2practice.dagger.DaggerActivityComponent;
+import com.balu.dagger2practice.dagger.AppComponent;
 import com.balu.dagger2practice.dagger.PetrolEngineModule;
 
 import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity {
-//
+
     @Inject
     Car car;
 
@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Inject
     Driver driver;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,14 +43,24 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        // Binds to BindingInstance of Component Builder
-        ActivityComponent activityComponent = DaggerActivityComponent.builder().appComponent(((MyApplication) getApplication()).getAppComponent()).engineCapcity(200).
-                horsePower(234).build();
+//         Bind values to BindingInstance of Component Builder
+//         (Component dependency)
+//        ActivityComponent activityComponent = DaggerActivityComponent.builder().appComponent(((MyApplication) getApplication()).getAppComponent()).engineCapcity(200).
+//                horsePower(234).build();
+//        activityComponent.Inject(this);
+
+
+
+        //SubComponent =>>>>>   ActivityComponet is SubComponent for AppComponent here.
+        ActivityComponent activityComponent = ((MyApplication)getApplication()).getAppComponent().getActivityComponentBuilder()
+                .engineCapcity(1200)
+                .horsePower(450)
+                .build();
         activityComponent.Inject(this);
 
 
 
-       // Car myCar = component.getMyCar();
+
         car.drive();
         engine.drive();
 
