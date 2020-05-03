@@ -3,6 +3,7 @@ package com.balu.dagger2practice;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.balu.dagger2practice.car.Car;
 import com.balu.dagger2practice.car.Engine;
@@ -24,12 +25,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d("MainActivity","onCreate");
 
 
 
         // for the parameter constructered Module we need to build at the time of component generation.
         CarComponent component = DaggerCarComponent.builder().petrolEngineModule(new PetrolEngineModule(200)).build();
-
 
 
 
@@ -39,9 +40,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         component.Inject(this);
+
+
+
        // Car myCar = component.getMyCar();
         car.drive();
         engine.drive();
+
+        Log.d("MainActivity", "car: "+car+"   engine: "+engine);
 
     }
 }

@@ -7,12 +7,13 @@ import javax.inject.Named;
 
 import dagger.Module;
 
-@Module
+
 public class DeiselEngine implements Engine {
 
     int horsePower;
 
     int engineCapacity;
+
 
     @Inject
     public DeiselEngine(int horsePower, int engineCapacity){
