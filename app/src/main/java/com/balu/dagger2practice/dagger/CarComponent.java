@@ -14,7 +14,7 @@ import dagger.Component;
 //https://www.youtube.com/watch?v=3tIvekCTSJg&list=PLrnPJCHvNZuA2ioi4soDZKz8euUQnJW65&index=8
 
 
-@Component(modules = {WheelsModule.class,DeiselEngineModule.class})
+@Component(modules = {WheelsModule.class,PetrolEngineModule.class})
 public interface CarComponent {
 
    // Car getMyCar();
@@ -22,19 +22,17 @@ public interface CarComponent {
     void Inject(MainActivity mainActivity);
 
 
-    @Component.Builder
-    interface Builder{
+//    @Component.Builder
+//    interface Builder{
+//
+//        @BindsInstance
+//        Builder horsePower (@Named( "Horse Power") int horsePower);
+//
+//        @BindsInstance
+//        Builder engineCapcity(@Named("Engine Capacity") int engineCapacity);
 
-        @BindsInstance
-        Builder horsePower (@Named( "Horse Power") int horsePower);
-
-        @BindsInstance
-        Builder engineCapcity(@Named("Engine Capacity") int engineCapacity);
-
-
-
-        CarComponent build();
-    }
+//        CarComponent build();
+//    }
 
 
 }

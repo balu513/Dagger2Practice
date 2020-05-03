@@ -15,10 +15,16 @@ public class DeiselEngine implements Engine {
     int engineCapacity;
 
     @Inject
-    public DeiselEngine(@Named("Horse Power") int horsePower, @Named("Engine Capacity") int engineCapacity){
+    public DeiselEngine(int horsePower, int engineCapacity){
         this.horsePower = horsePower;
         this.engineCapacity = engineCapacity;
     }
+
+//    @Inject
+//    public DeiselEngine(@Named("Horse Power") int horsePower, @Named("Engine Capacity") int engineCapacity){
+//        this.horsePower = horsePower;
+//        this.engineCapacity = engineCapacity;
+//    }
 
     @Override
     public void drive() {

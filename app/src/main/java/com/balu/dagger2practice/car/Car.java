@@ -6,11 +6,16 @@ import javax.inject.Inject;
 
 public class Car {
 
+//    @Inject
+//    public Car(Engine engine, Wheels wheels) {
+//    }
+
     @Inject
-    public Car(Engine engine, Wheels wheels) {
+    public Car(){
+
     }
 
-//    public void drive(){
-//        Log.d("Car class", "Driving");
-//    }
+    public void drive(){
+        Log.d("Car class", "Driving");
+    }
 }
