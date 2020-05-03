@@ -52,19 +52,23 @@ public class MainActivity extends AppCompatActivity {
 
 
         //SubComponent =>>>>>   ActivityComponet is SubComponent for AppComponent here.
-        ActivityComponent activityComponent = ((MyApplication)getApplication()).getAppComponent().getActivityComponentBuilder()
-                .engineCapcity(1200)
-                .horsePower(450)
-                .build();
+//        ActivityComponent activityComponent = ((MyApplication)getApplication()).getAppComponent().getActivityComponentBuilder()
+//                .engineCapcity(1200)
+//                .horsePower(450)
+//                .build();
+//        activityComponent.Inject(this);
+
+
+        //SubComponent FACTORY.  (usage, we can't chance to miss the send parameters. but if some values optional better Builder only instead
+        // of Factory)
+        ActivityComponent activityComponent = ((MyApplication)getApplication()).getAppComponent().getActivityComponentFactory()
+                .create(1200,450);
         activityComponent.Inject(this);
-
-
-
 
         car.drive();
         engine.drive();
 
-        Log.d("MainActivity", "\ncar: "+car+"\nengine: "+engine +"\ndriver: "+driver);
+        Log.d("MainActivity", "\ncar: "+car+"\nengine: "+engine +"\ndriver: "+driver+"\nname: "+driver.name);
 
     }
 }

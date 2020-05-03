@@ -229,3 +229,11 @@ public interface AppComponent {
    // Driver getDriver();
     ActivityComponent.Builder getActivityComponentBuilder();
 }
+
+--------------------------------------------------------------
+
+@component.Builder vs @Component.Factory
+
+@component.Builder -> passing the values at the time of component creation in builder way chance of missing some values, it prefer if some values are optionals.
+@Component.Factory  -> we have to pass all the values at the time of component creation.
+

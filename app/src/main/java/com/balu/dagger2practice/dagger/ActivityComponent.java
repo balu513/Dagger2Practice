@@ -46,17 +46,27 @@ public interface ActivityComponent {
     // Car getMyCar();
     void Inject(MainActivity mainActivity);
 
-    @Subcomponent.Builder
-    interface Builder{
+//    @Subcomponent.Builder
+//    interface Builder{
+//
+//        @BindsInstance
+//        Builder horsePower (@Named( "Horse Power") int horsePower);
+//
+//        @BindsInstance
+//        Builder engineCapcity(@Named("Engine Capacity") int engineCapacity);
+//
+//        ActivityComponent build();
+//
+//       // Builder appComponent(AppComponent appComponent);
+//    }
 
-        @BindsInstance
-        Builder horsePower (@Named( "Horse Power") int horsePower);
 
-        @BindsInstance
-        Builder engineCapcity(@Named("Engine Capacity") int engineCapacity);
 
-        ActivityComponent build();
 
-       // Builder appComponent(AppComponent appComponent);
+    @Subcomponent.Factory
+    interface Factory{
+        ActivityComponent create(@BindsInstance @Named( "Horse Power") int horsePower, @BindsInstance @Named("Engine Capacity") int engineCapacity);
     }
+
+
 }
